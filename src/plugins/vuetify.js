@@ -1,6 +1,15 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib/framework'
+import '@/assets/scss/app.scss'
 
 Vue.use(Vuetify)
 
-export default new Vuetify({})
+import pt from 'vuetify/es5/locale/pt'
+const opts = {
+  lang: {
+    locales: { pt },
+    current: 'pt'
+  }
+}
+
+export default new Vuetify(opts)
