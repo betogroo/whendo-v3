@@ -1,15 +1,11 @@
 <template>
-  <hello-world />
+  <div class="pt-2">
+    <h3 class="text-center text--disabled">Nenhuma tarefa Adicionada</h3>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
-
 export default {
-  name: "Home",
-
-  components: {
-    HelloWorld,
-  },
-};
+  name: 'Home'
+}
 </script>
