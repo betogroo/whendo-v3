@@ -24,7 +24,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-navigation-drawer app v-model="drawer" temporary></v-navigation-drawer>
+    <v-navigation-drawer app v-model="drawer" temporary width="272"></v-navigation-drawer>
   </div>
 </template>
 
