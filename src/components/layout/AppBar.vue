@@ -27,22 +27,16 @@
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer" temporary width="272">
       <drawer-profile
+        :viewMode="viewMode"
         :isLogged="isLogged"
         :loggedUser="isLogged ? loggedUser : localUser"
+        @toggleViewMode="toggleViewMode"
       />
-      <div id="drawer-menu">
-        <v-list dense>
-          <v-list-item-group v-model="selectedItem">
-            <v-list-item v-for="(item, i) in allTaskLists" :key="i">
-              <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
+      <div v-if="viewMode">
+        <drawer-menu :items="allTaskLists" />
+      </div>
+      <div v-else>
+        <drawer-menu :items="accounts" />
       </div>
     </v-navigation-drawer>
   </div>
@@ -50,11 +44,13 @@
 
 <script>
 import DrawerProfile from '@/components/layout/widgets/DrawerProfile.vue'
+import DrawerMenu from '@/components/layout/widgets/DrawerMenu.vue'
 export default {
   name: 'AppBar',
 
   components: {
-    DrawerProfile
+    DrawerProfile,
+    DrawerMenu
   },
 
   props: {
@@ -65,17 +61,24 @@ export default {
   },
 
   data: () => ({
+    viewMode: true,
     isLogged: false,
     loggedUser: {
+      id: '4021e344-ac09-46f8-9eb2-83009cd38568',
       name: 'Luiz Roberto Cintra',
       imageProfile: 'https://randomuser.me/api/portraits/men/81.jpg',
-      email: 'luizRoberto@gmail.com'
+      email: 'luizRoberto@gmail.com',
+      text: 'luizRoberto@gmail.com',
+      icon: 'mdi-account'
     },
     localUser: {
+      id: '5f9d3e62-947d-4464-9500-739de6b5cd51',
       name: 'Conta Local',
       imageProfile:
         'https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png',
-      email: ''
+      email: 'Conta Local',
+      text: 'Conta Local',
+      icon: 'mdi-account'
     },
     drawer: true,
     navRightMenu: [
@@ -85,8 +88,7 @@ export default {
       { title: 'Esconder Tarefas Concluídas' },
       { title: 'Enviar' }
     ],
-    selectedItem: 1,
-    defaultItems: [
+    defaultMenuItems: [
       { text: 'Todas as Tarefas', icon: 'mdi-calendar' },
       {
         text: 'Tarefas Finalizadas',
@@ -99,13 +101,20 @@ export default {
   methods: {
     toggleDrawer() {
       this.$emit('toggleDrawer')
+    },
+    toggleViewMode() {
+      this.viewMode = !this.viewMode
     }
   },
 
   computed: {
     allTaskLists() {
-      const tasklists = [...this.defaultItems, ...this.taskLists]
+      const tasklists = [...this.defaultMenuItems, ...this.taskLists]
       return tasklists
+    },
+    accounts() {
+      const accounts = [this.loggedUser, this.localUser]
+      return accounts
     }
   }
 }

@@ -14,8 +14,8 @@
         </v-list-item-content>
       </v-list-item>
       <div class="d-flex flex-row-reverse pr-2 pb-2">
-        <v-icon @click="toggleOptions" medium dark
-          >mdi-menu-{{ toggleOptionsButton ? 'up' : 'down' }}</v-icon
+        <v-icon @click="toggleViewMode" medium dark
+          >mdi-menu-{{ viewMode ? 'up' : 'down' }}</v-icon
         >
       </div>
     </v-list>
@@ -27,6 +27,10 @@ export default {
   name: 'DrawerProfile',
 
   props: {
+    viewMode: {
+      type: Boolean,
+      default: true
+    },
     loggedUser: {
       type: Object,
       required: true
@@ -37,13 +41,9 @@ export default {
     }
   },
 
-  data: () => ({
-    toggleOptionsButton: 0
-  }),
-
   methods: {
-    toggleOptions() {
-      this.toggleOptionsButton = !this.toggleOptionsButton
+    toggleViewMode() {
+      this.$emit('toggleViewMode')
     }
   }
 }
