@@ -15,6 +15,7 @@
         </template>
         <v-list>
           <v-list-item
+            class="mx-2"
             v-for="item in navRightMenu"
             :key="item.title"
             @click="() => {}"
@@ -25,32 +26,13 @@
       </v-menu>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer" temporary width="272">
-      <div id="profile">
-        <v-card color="primary" dark tile>
-          <v-list dense class="ml-0 pt-0">
-            <v-list-item two-line>
-              <v-list-item-avatar size="48">
-                <img :src="localAccount.imageProfile" />
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <v-list-item-title>{{ localAccount.name }}</v-list-item-title>
-                <v-list-item-subtitle v-if="isLogged"
-                  >Logged In</v-list-item-subtitle
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item class="justify-end pt-0">
-              <v-icon @click="toggleOptions" dark medium
-                >mdi-chevron-{{ toggleOptionsButton ? 'up' : 'down' }}</v-icon
-              >
-            </v-list-item>
-          </v-list>
-        </v-card>
-      </div>
+      <drawer-profile
+        :isLogged="isLogged"
+        :loggedUser="isLogged ? loggedUser : localUser"
+      />
       <div id="drawer-menu">
         <v-list dense>
-          <v-list-item-group v-model="selectedItem" color="primary">
+          <v-list-item-group v-model="selectedItem">
             <v-list-item v-for="(item, i) in allTaskLists" :key="i">
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>
@@ -67,8 +49,13 @@
 </template>
 
 <script>
+import DrawerProfile from '@/components/layout/widgets/DrawerProfile.vue'
 export default {
   name: 'AppBar',
+
+  components: {
+    DrawerProfile
+  },
 
   props: {
     title: {
@@ -78,17 +65,17 @@ export default {
   },
 
   data: () => ({
-    toggleOptionsButton: 0,
-    isLogged: 0,
+    isLogged: false,
     loggedUser: {
       name: 'Luiz Roberto Cintra',
       imageProfile: 'https://randomuser.me/api/portraits/men/81.jpg',
       email: 'luizRoberto@gmail.com'
     },
-    localAccount: {
+    localUser: {
       name: 'Conta Local',
       imageProfile:
-        'https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png'
+        'https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png',
+      email: ''
     },
     drawer: true,
     navRightMenu: [
@@ -112,9 +99,6 @@ export default {
   methods: {
     toggleDrawer() {
       this.$emit('toggleDrawer')
-    },
-    toggleOptions() {
-      this.toggleOptionsButton = !this.toggleOptionsButton
     }
   },
 
@@ -127,4 +111,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+#profile {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+</style>
