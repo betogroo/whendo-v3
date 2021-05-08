@@ -85,6 +85,7 @@ export default {
     tasklist: [],
     viewMode: true,
     isLogged: true,
+    btnAddTask: false,
     loggedUser: {
       id: '4021e344-ac09-46f8-9eb2-83009cd38568',
       imageProfile: 'https://randomuser.me/api/portraits/men/81.jpg',
@@ -109,7 +110,7 @@ export default {
       text: 'Adicionar Nova Conta do Googlel',
       icon: 'mdi-plus'
     },
-    drawer: true,
+    drawer: false,
     navRightMenu: [
       { title: 'Ordenar' },
       { title: 'Desmarcar Tarefas Concluídas' },
