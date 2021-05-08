@@ -32,6 +32,13 @@
         :loggedUser="isLogged ? loggedUser : localUser"
         @toggleViewMode="toggleViewMode"
       />
+      <v-sheet
+        @click="toggleViewMode"
+        class="d-flex flex-row-reverse pr-2"
+        color="primary"
+      >
+        <v-icon medium dark>mdi-menu-{{ viewMode ? 'up' : 'down' }}</v-icon>
+      </v-sheet>
       <v-list dense class="pt-1">
         <v-list-item-group>
           <template v-if="viewMode">

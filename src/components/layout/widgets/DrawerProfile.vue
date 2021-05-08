@@ -15,11 +15,6 @@
           }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-      <div class="d-flex flex-row-reverse pr-2 pb-2">
-        <v-icon @click="toggleViewMode" medium dark
-          >mdi-menu-{{ viewMode ? 'up' : 'down' }}</v-icon
-        >
-      </div>
     </v-list>
   </v-sheet>
 </template>
@@ -29,10 +24,6 @@ export default {
   name: 'DrawerProfile',
 
   props: {
-    viewMode: {
-      type: Boolean,
-      default: true
-    },
     loggedUser: {
       type: Object,
       required: true
@@ -40,12 +31,6 @@ export default {
     isLogged: {
       type: Boolean,
       default: false
-    }
-  },
-
-  methods: {
-    toggleViewMode() {
-      this.$emit('toggleViewMode')
     }
   }
 }
