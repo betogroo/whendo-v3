@@ -1,18 +1,20 @@
 <template>
-  <div id="drawer-menu">
-    <v-list dense class="pt-1">
-      <v-list-item-group v-model="selectedItem">
-        <v-list-item v-for="(item, i) in items" :key="`${i}_${item.text}`">
-          <v-list-item-icon>
-            <v-icon v-text="item.icon"></v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.text"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
-  </div>
+  <v-list-item>
+    <v-list-item-icon>
+      <v-icon v-text="item.icon"></v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+      <v-list-item-title v-text="item.text"></v-list-item-title>
+    </v-list-item-content>
+    <v-list-item-action class="text-right pr-2">
+      <v-list-item-subtitle>{{
+        item.totalTasks && item.doneTasks
+          ? `${item.doneTasks}/${item.totalTasks}`
+          : item.totalTasks || item.doneTasks
+      }}</v-list-item-subtitle>
+    </v-list-item-action>
+    <v-sheet :color="item.color" height="32" width="3"></v-sheet>
+  </v-list-item>
 </template>
 
 <script>
@@ -20,16 +22,10 @@ export default {
   name: 'DrawerMenu',
 
   props: {
-    items: {
-      type: Array,
+    item: {
+      type: Object,
       required: true
     }
-  },
-
-  data: () => ({
-    selectedItem: 0
-  })
+  }
 }
 </script>
-
-<style></style>

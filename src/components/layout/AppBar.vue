@@ -32,12 +32,26 @@
         :loggedUser="isLogged ? loggedUser : localUser"
         @toggleViewMode="toggleViewMode"
       />
-      <div v-if="viewMode">
-        <drawer-menu :items="allTaskLists" />
-      </div>
-      <div v-else>
-        <drawer-menu :items="accounts" />
-      </div>
+      <v-list dense class="pt-1">
+        <v-list-item-group>
+          <template v-if="viewMode">
+            <drawer-menu
+              v-for="(tasklist, i) in allTaskLists"
+              :key="`${i}_${tasklist.text}`"
+              :item="tasklist"
+            />
+          </template>
+          <template v-else>
+            <drawer-menu
+              v-for="(account, i) in accounts"
+              :key="`${i}_${account.text}`"
+              :item="account"
+            />
+            <v-divider></v-divider>
+            <drawer-menu :item="addUser" />
+          </template>
+        </v-list-item-group>
+      </v-list>
     </v-navigation-drawer>
   </div>
 </template>
@@ -61,11 +75,11 @@ export default {
   },
 
   data: () => ({
+    tasklist: [],
     viewMode: true,
-    isLogged: false,
+    isLogged: true,
     loggedUser: {
       id: '4021e344-ac09-46f8-9eb2-83009cd38568',
-      name: 'Luiz Roberto Cintra',
       imageProfile: 'https://randomuser.me/api/portraits/men/81.jpg',
       email: 'luizRoberto@gmail.com',
       text: 'luizRoberto@gmail.com',
@@ -73,12 +87,20 @@ export default {
     },
     localUser: {
       id: '5f9d3e62-947d-4464-9500-739de6b5cd51',
-      name: 'Conta Local',
       imageProfile:
         'https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png',
       email: 'Conta Local',
       text: 'Conta Local',
       icon: 'mdi-account'
+    },
+    addUser: {
+      id: '5f9d3e6as947d-4464-9500-739de6b5cd51',
+      name: 'Adicionar Nova Conta do Google',
+      imageProfile:
+        'https://www.pngarts.com/files/10/Default-Profile-Picture-Download-PNG-Image.png',
+      email: 'Adicionar Nova Conta do Google',
+      text: 'Adicionar Nova Conta do Googlel',
+      icon: 'mdi-plus'
     },
     drawer: true,
     navRightMenu: [
@@ -89,13 +111,34 @@ export default {
       { title: 'Enviar' }
     ],
     defaultMenuItems: [
-      { text: 'Todas as Tarefas', icon: 'mdi-calendar' },
+      {
+        text: 'Todas as Tarefas',
+        icon: 'mdi-calendar',
+        totalTasks: 18,
+        doneTasks: 7
+      },
       {
         text: 'Tarefas Finalizadas',
-        icon: 'mdi-checkbox-marked-circle-outline'
+        icon: 'mdi-checkbox-marked-circle-outline',
+        doneTasks: 7
       }
     ],
-    taskLists: [{ text: 'Todas as Tarefas', icon: 'mdi-menu', border: 'red' }]
+    taskLists: [
+      {
+        text: 'Minhas Lista',
+        icon: 'mdi-menu',
+        color: 'red',
+        totalTasks: 10,
+        doneTasks: 3
+      },
+      {
+        text: 'Compras',
+        icon: 'mdi-menu',
+        color: 'blue',
+        totalTasks: 8,
+        doneTasks: 4
+      }
+    ]
   }),
 
   methods: {
@@ -119,9 +162,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-#profile {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-</style>
