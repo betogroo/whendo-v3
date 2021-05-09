@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="pt-2"
+    class="pt-2 grey lighten-2"
       v-touch="{
         left: () => swipe('Left'),
         right: () => swipe('Right'),
@@ -16,19 +16,16 @@
         @action="goTo('About')"
       ></button-float>
       <h1>
-        Tasks
+        Done Tasks
       </h1>
     <h3 class="text-center text--disabled">Nenhuma tarefa Adicionada</h3>
-    
-      <v-subheader>Swipe Direction</v-subheader>
-      {{ swipeDirection }}
   </div>
 </template>
 
 <script>
 import ButtonFloat from '@/components/layout/ButtonFloat.vue'
 export default {
-  name: 'Tasks',
+  name: 'DoneTasks',
 
   components: {
     ButtonFloat
@@ -45,8 +42,8 @@ export default {
     },
     swipe (direction) {
       this.swipeDirection = direction
-      if (direction === 'Right') {
-        this.$router.push({ name: 'DoneTasks'})
+      if (direction === 'Left') {
+        this.$router.push({ name: 'Tasks'})
       }
     },
   }
