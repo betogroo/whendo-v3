@@ -1,27 +1,11 @@
 <template>
-  <div 
-    class="pt-2"
-      v-touch="{
-        left: () => swipe('Left'),
-        right: () => swipe('Right'),
-        up: () => swipe('Up'),
-        down: () => swipe('Down')
-      }"
-      align="center"
-      justify="center"
-      style="height: 100%"
-    >
-      <button-float
-        class="mb-4"
-        @action="goTo('About')"
-      ></button-float>
-      <h1>
-        Tasks
-      </h1>
-    <h3 class="text-center text--disabled">Nenhuma tarefa Adicionada</h3>
-    
-      <v-subheader>Swipe Direction</v-subheader>
-      {{ swipeDirection }}
+  <div>
+    <v-sheet color="grey lighten-3"> Ordenar por</v-sheet>
+    <div class="pt-2">
+      <button-float class="mb-4" @action="goTo('About')"></button-float>
+      <h1>Tasks</h1>
+      <h3 class="text-center text--disabled">Nenhuma tarefa Adicionada</h3>
+    </div>
   </div>
 </template>
 
@@ -35,20 +19,13 @@ export default {
   },
 
   data: () => ({
-    btnAddTask: false,
-    swipeDirection: 'None',
+    btnAddTask: false
   }),
 
   methods: {
     goTo(routeName) {
       this.$router.push({ name: routeName })
-    },
-    swipe (direction) {
-      this.swipeDirection = direction
-      if (direction === 'Right') {
-        this.$router.push({ name: 'DoneTasks'})
-      }
-    },
+    }
   }
 }
 </script>
