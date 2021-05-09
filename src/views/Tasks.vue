@@ -1,8 +1,9 @@
 <template>
   <div class="pt-2">
-    <button-float
-      @action="goTo('About')"
-    ></button-float>
+      <button-float
+        class="mb-4"
+        @action="goTo('About')"
+      ></button-float>
     <h3 class="text-center text--disabled">Nenhuma tarefa Adicionada</h3>
   </div>
 </template>
