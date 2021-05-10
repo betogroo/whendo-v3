@@ -1,21 +1,21 @@
 <template>
   <div>
-    <v-sheet color="grey lighten-3"> Ordenar por</v-sheet>
-    <div class="pt-2">
-      <button-float class="mb-4" @action="goTo('About')"></button-float>
-      <h1>Tasks</h1>
-      <h3 class="text-center text--disabled">Nenhuma tarefa Adicionada</h3>
-    </div>
+    <tasks-sort-bar></tasks-sort-bar>
+    <button-float class="mb-4" @action="goTo('About')"></button-float>
+    <h4 class="text-center font-weight-regular text--disabled">
+      Nenhuma tarefa Adicionada
+    </h4>
   </div>
 </template>
 
 <script>
 import ButtonFloat from '@/components/layout/ButtonFloat.vue'
+import TasksSortBar from '@/components/layout/widgets/TasksSortBar.vue'
 export default {
   name: 'Tasks',
 
   components: {
-    ButtonFloat
+    ButtonFloat, TasksSortBar
   },
 
   data: () => ({
@@ -23,6 +23,7 @@ export default {
   }),
 
   methods: {
+    // tests
     goTo(routeName) {
       this.$router.push({ name: routeName })
     }
