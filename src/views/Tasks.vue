@@ -15,7 +15,8 @@ export default {
   name: 'Tasks',
 
   components: {
-    ButtonFloat, TasksSortBar
+    ButtonFloat,
+    TasksSortBar
   },
 
   data: () => ({
