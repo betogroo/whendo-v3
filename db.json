@@ -1,0 +1,8 @@
+{
+  "tasks" :[
+    { "id": 1, "title": "Comer Frutas", "note": "Notas do comer frutas" },
+    { "id": 2, "title": "Fazer Lição", "note": "Hiatória e Geografia" },
+    { "id": 3, "title": "Jogar LOL", "note": "Só uma partida" },
+    { "id": 4, "title": "Almoço", "note": "" }
+  ]
+}
