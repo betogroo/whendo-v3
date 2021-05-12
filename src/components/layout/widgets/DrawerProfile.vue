@@ -1,5 +1,5 @@
 <template>
-  <v-sheet outlined tile id="profile" color="primary">
+  <v-sheet tile id="profile" color="primary">
     <v-list max-height="120px" dense class="pa-0" subheader>
       <v-list-item dark two-line class="mt-0 pb-0 pl-3 pt-4">
         <v-list-item-avatar class="ma-0" size="54">
