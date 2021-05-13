@@ -1,9 +1,9 @@
 <template>
   <div>
-    <tasks-sort-bar style="position: fixed"></tasks-sort-bar>
     <button-float class="mb-4" @action="goTo('About')"></button-float>
     <template v-if="tasks.length > 0">
-      <v-list two-line>
+      <tasks-sort-bar></tasks-sort-bar>
+      <v-list two-line class="pt-7">
         <task
           @checkItem="checkItem(task)"
           v-for="task in undoneTasks"
@@ -21,7 +21,7 @@
         />
       </v-list>
     </template>
-    <template v-else>
+    <template v-if="!tasks.length">
       <h4 class="text-center font-weight-regular text--disabled">
         Nenhuma tarefa Adicionada
       </h4>

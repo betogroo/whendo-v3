@@ -4,8 +4,8 @@
       <v-sheet
         v-bind="attrs"
         v-on="on"
-        class="d-flex align-center justify-end pr-1"
-        color="grey lighten-3"
+        class="task-sort-bar"
+        color="grey lighten-2"
       >
         <h5 class="blue--text font-weight-regular">
           Ordernar por: {{ order.label }}
@@ -58,4 +58,15 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.task-sort-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 24px;
+  padding-right: 5px;
+  position: fixed;
+  z-index: 5;
+}
+</style>
