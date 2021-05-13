@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-list-item class="pl-0" :style="`border-left: 4px solid ${task.color}`">
+    <v-list-item
+      @click="$router.push({ name: 'TaskView', params: { id: task.id } })"
+      class="pl-0"
+      :style="`border-left: 4px solid ${task.color}`"
+    >
       <v-list-item-action @click="checkItem()" class="d-flex ma-0 px-3 mb-3">
         <v-icon
           >mdi-{{
