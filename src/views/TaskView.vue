@@ -11,8 +11,8 @@ export default {
 
   props: {
     id: {
-      type: Number,
-      required: true
+      type: [Number, String],
+      default: 1
     }
   },
 

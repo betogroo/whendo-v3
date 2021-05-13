@@ -10,7 +10,13 @@ const routes = [
     path: '/',
     name: 'Tasks',
     component: Tasks,
-    props: (route) => ({ tasklist: parseInt(route.query.tasklist) || 0 })
+    props: (route) => ({ tasklist: parseInt(route.query.tasklist) || 'all' })
+  },
+  {
+    path: '/:tasklist',
+    name: 'TasksBy',
+    component: Tasks,
+    props: true
   },
   {
     path: '/task/:id',

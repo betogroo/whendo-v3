@@ -1,10 +1,10 @@
 <template>
-  <v-list-item>
+  <v-list-item :to="item.id ? { name: 'Tasks', query: { tasklist: item.id } } : item.route">
     <v-list-item-icon>
-      <v-icon v-text="item.icon"></v-icon>
+      <v-icon v-text="`mdi-${icon}`"></v-icon>
     </v-list-item-icon>
     <v-list-item-content>
-      <v-list-item-title v-text="item.text"></v-list-item-title>
+      <v-list-item-title v-text="item.title"></v-list-item-title>
     </v-list-item-content>
     <v-list-item-action class="text-right pr-2">
       <v-list-item-subtitle>{{
@@ -25,6 +25,10 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    icon: {
+      type: String,
+      default: 'menu'
     }
   }
 }
