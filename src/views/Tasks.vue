@@ -1,8 +1,5 @@
 <template>
   <div>
-    <h1>
-      {{ tasklist }}
-    </h1>
     <button-float class="mb-4" @action="goTo('About')"></button-float>
     <template v-if="tasks.length > 0">
       <tasks-sort-bar></tasks-sort-bar>

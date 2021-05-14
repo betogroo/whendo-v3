@@ -7,10 +7,9 @@ export default {
   getTasks: (tasklist) => {
     if (tasklist === 'all') {
       return http.get(`tasks`)
-    }else{
+    } else {
       return http.get(`tasks?idTaskList=${tasklist}`)
     }
-    
   },
   getTask(id) {
     return http.get(`tasks/${id}`)

@@ -7,7 +7,8 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/tasks',
+    alias: '/',
     name: 'Tasks',
     component: Tasks,
     props: (route) => ({ tasklist: parseInt(route.query.tasklist) || 'all' })

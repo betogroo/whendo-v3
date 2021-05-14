@@ -40,13 +40,15 @@
         <v-icon medium dark>mdi-menu-{{ viewMode ? 'up' : 'down' }}</v-icon>
       </v-sheet>
       <v-list dense class="pt-1">
-        <v-list-item-group v-model="selectedItem">
+        <v-list-item-group v-model="selectedTaskList">
           <template v-if="viewMode">
             <drawer-menu
               v-for="(item, i) in allMenuItems"
               :key="i"
               :item="item"
               :icon="item.icon"
+              :disabled="selectedTaskList === i"
+              :route="{ name: 'Tasks', query: { tasklist: item.id } }"
             />
           </template>
           <template v-else>
@@ -66,6 +68,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import TaskServices from '@/services/TaskServices.js'
 import DrawerProfile from '@/components/layout/widgets/DrawerProfile.vue'
 import DrawerMenu from '@/components/layout/widgets/DrawerMenu.vue'
@@ -75,13 +78,6 @@ export default {
   components: {
     DrawerProfile,
     DrawerMenu
-  },
-
-  props: {
-    title: {
-      type: String,
-      default: 'Todas as Tarefas'
-    }
   },
 
   data: () => ({
@@ -114,7 +110,7 @@ export default {
       icon: 'plus'
     },
     drawer: false,
-    selectedItem: null,
+    selectedTaskList: null,
     navRightMenu: [
       { title: 'Ordenar' },
       { title: 'Desmarcar Tarefas Concluídas' },
@@ -124,16 +120,18 @@ export default {
     ],
     defaultMenuItems: [
       {
+        id: 'all',
         title: 'Todas as Tarefas',
         icon: 'calendar',
-        route: { name: 'Tasks', params: { tasklist: 0 } },
+        route: { name: 'Tasks', params: { tasklist: 'all' } },
         totalTasks: 18,
         doneTasks: 7
       },
       {
+        id: 'done',
         title: 'Tarefas Finalizadas',
         icon: 'checkbox-marked-circle-outline',
-        route: { name: 'Tasks', params: { tasklist: 0 } },
+        route: { name: 'Tasks', params: { tasklist: 'done' } },
         doneTasks: 7
       }
     ],
@@ -155,12 +153,13 @@ export default {
   },
 
   watch: {
-    selectedItem() {
+    selectedTaskList() {
       this.drawer = false
     }
   },
 
   computed: {
+    ...mapState(['title']),
     accounts() {
       const accounts = [this.loggedUser, this.localUser]
       return accounts
