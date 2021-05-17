@@ -2,18 +2,24 @@
   <div>
     <button-float class="mb-4" @action="goTo('About')"></button-float>
     <template v-if="tasks.length > 0">
-      <template v-for="tasklist in tasklists">
-        <v-sheet :key="tasklist.id">
-          {{ tasklist.title }}
-        </v-sheet>
-        <v-list :key="tasklist.id * 3.1416">
-          <v-list-item
-            v-for="task in getTasksByTaskList(tasklist.id)"
-            :key="task.id"
-            >{{ task.title }}
-          </v-list-item>
-        </v-list>
-      </template>
+      <v-expansion-panels flat tile accordion multiple>
+        <v-expansion-panel v-for="(tasklist, i) in tasklists" :key="i">
+          <v-expansion-panel-header class="pa-0" color="grey lighten-2">
+            <template v-slot:actions>
+              <v-icon class="icon">mdi-menu-right</v-icon>
+            </template>
+            <span class="header">{{ tasklist.title }}</span>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <task
+              v-for="task in getTasksByTaskList(tasklist.id)"
+              :key="task.id"
+              @checkItem="checkItem(task)"
+              :task="task"
+            />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </template>
     <template v-if="!tasks.length">
       <h4 class="text-center font-weight-regular text--disabled">
@@ -27,13 +33,11 @@
 import TaskServices from '@/services/TaskServices.js'
 import Task from '@/components/Task.vue'
 import ButtonFloat from '@/components/layout/ButtonFloat.vue'
-import TasksSortBar from '@/components/layout/widgets/TasksSortBar.vue'
 export default {
   name: 'Tasks',
 
   components: {
     ButtonFloat,
-    TasksSortBar,
     Task
   },
 
@@ -85,3 +89,22 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.v-expansion-panel-header {
+  height: 28px;
+  margin-top: 1px;
+}
+.v-expansion-panel--active
+  > .v-expansion-panel-header--active
+  .v-expansion-panel-header__icon:not(.v-expansion-panel-header__icon--disable-rotate)
+  .v-icon {
+  transform: rotate(90deg);
+}
+
+.icon {
+  order: 0;
+}
+.header {
+  order: 1;
+}
+</style>
