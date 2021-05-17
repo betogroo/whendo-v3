@@ -1,5 +1,5 @@
 <template>
-  <v-list-item :disabled="disabled" @click="viewTaskList(item)">
+  <v-list-item @click="viewTaskList(item)">
     <v-list-item-icon>
       <v-icon v-text="`mdi-${icon}`"></v-icon>
     </v-list-item-icon>
@@ -22,10 +22,6 @@ export default {
   name: 'DrawerMenu',
 
   props: {
-    disabled: {
-      type: Boolean,
-      required: true
-    },
     route: {
       type: Object,
       required: true

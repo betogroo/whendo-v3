@@ -2,24 +2,16 @@
   <div>
     <button-float class="mb-4" @action="goTo('About')"></button-float>
     <template v-if="tasks.length > 0">
-      <template>
-        <tasks-sort-bar></tasks-sort-bar>
-        <v-list two-line class="pt-7">
-          <task
-            @checkItem="checkItem(task)"
-            v-for="task in undoneTasks"
+      <template v-for="tasklist in tasklists">
+        <v-sheet :key="tasklist.id">
+          {{ tasklist.title }}
+        </v-sheet>
+        <v-list :key="tasklist.id * 3.1416">
+          <v-list-item
+            v-for="task in getTasksByTaskList(tasklist.id)"
             :key="task.id"
-            :task="task"
-          />
-          <v-sheet class="pa-1 ps-3" color="grey lighten-3">
-            <h4 class="text--secondary font-weight-regular">CONCLUÍDO</h4>
-          </v-sheet>
-          <task
-            @checkItem="checkItem(task)"
-            v-for="task in doneTasks"
-            :key="task.id"
-            :task="task"
-          />
+            >{{ task.title }}
+          </v-list-item>
         </v-list>
       </template>
     </template>
@@ -53,7 +45,8 @@ export default {
   },
 
   data: () => ({
-    tasks: []
+    tasks: [],
+    tasklists: []
   }),
 
   methods: {
@@ -61,6 +54,10 @@ export default {
       const i = this.tasks.findIndex((item) => item.id === data.id)
       const isDone = !this.tasks[i].isDone
       this.$set(this.tasks, i, { ...this.tasks[i], isDone })
+    },
+    getTasksByTaskList(tasklist) {
+      const tasks = this.doneTasks.filter((i) => i.idTaskList === tasklist)
+      return tasks
     },
     // tests
     goTo(routeName) {
@@ -71,9 +68,6 @@ export default {
   computed: {
     doneTasks() {
       return this.tasks.filter((item) => item.isDone === true)
-    },
-    undoneTasks() {
-      return this.tasks.filter((item) => item.isDone === false)
     }
   },
 
@@ -84,6 +78,9 @@ export default {
       })
       .catch((error) => {
         console.log(error)
+      }),
+      TaskServices.getTaskLists().then((res) => {
+        this.tasklists = res.data
       })
   }
 }

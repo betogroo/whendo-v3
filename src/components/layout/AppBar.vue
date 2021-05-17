@@ -43,12 +43,18 @@
         <v-list-item-group v-model="selectedTaskList">
           <template v-if="viewMode">
             <drawer-menu
-              v-for="(item, i) in allMenuItems"
-              :key="i"
+              v-for="item in defaultMenuItems"
+              :key="item.id"
               :item="item"
               :icon="item.icon"
-              :disabled="selectedTaskList === i"
-              :route="{ name: 'Tasks', query: { tasklist: item.id } }"
+              :route="item.route"
+            />
+            <drawer-menu
+              v-for="item in tasklists"
+              :key="item.id"
+              :item="item"
+              :icon="item.icon"
+              :route="{ name: 'TaskListTasks', params: { tasklist: item.id } }"
             />
           </template>
           <template v-else>
@@ -131,7 +137,7 @@ export default {
         id: 'done',
         title: 'Tarefas Finalizadas',
         icon: 'checkbox-marked-circle-outline',
-        route: { name: 'Tasks', params: { tasklist: 'done' } },
+        route: { name: 'DoneTasks', params: { tasklist: 'done' } },
         doneTasks: 7
       }
     ],
@@ -147,7 +153,8 @@ export default {
     },
     getTaskLists() {
       TaskServices.getTaskLists().then((res) => {
-        this.tasklists = res.data
+        const tasklists = res.data
+        this.tasklists = tasklists
       })
     }
   },

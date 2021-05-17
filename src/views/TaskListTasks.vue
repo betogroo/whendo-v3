@@ -2,7 +2,10 @@
   <div>
     <button-float class="mb-4" @action="goTo('About')"></button-float>
     <template v-if="tasks.length > 0">
-      <template>
+      <template v-if="tasklist === 'all'"> Tudo </template>
+      <template v-if="tasklist === 'done'"> só finalizadas </template>
+
+      <template v-else>
         <tasks-sort-bar></tasks-sort-bar>
         <v-list two-line class="pt-7">
           <task
@@ -53,7 +56,9 @@ export default {
   },
 
   data: () => ({
-    tasks: []
+    btnAddTask: false,
+    tasks: [],
+    tasklists: []
   }),
 
   methods: {
@@ -84,6 +89,9 @@ export default {
       })
       .catch((error) => {
         console.log(error)
+      }),
+      TaskServices.getTaskLists().then((res) => {
+        this.tasklists = res.data
       })
   }
 }
